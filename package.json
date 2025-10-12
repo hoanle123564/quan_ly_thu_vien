@@ -1,0 +1,29 @@
+{
+    "name": "be_nodejs_qly_thu_vien",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hoanle123564/quan_ly_thu_vien.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/hoanle123564/quan_ly_thu_vien/issues"
+    },
+    "homepage": "https://github.com/hoanle123564/quan_ly_thu_vien#readme",
+    "dependencies": {
+        "body-parser": "^2.2.0",
+        "ejs": "^3.1.10",
+        "express": "^5.1.0",
+        "mongodb": "^6.20.0",
+        "nodemon": "^3.1.10",
+        "path": "^0.12.7",
+        "routes": "^2.1.0"
+    }
+}
