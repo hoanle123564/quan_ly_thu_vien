@@ -1,14 +1,14 @@
-const connection = require('../config/connectdb');
+const NhanVien = require('../models/NhanVien');
 
 const ThemNV = async (req, res) => {
     try {
-        const db = await connection();
-        const result = await db.collection('NhanVien').insertOne(req.body);
-        return res.status(201).json({ message: 'NhanVien added!', data: result });
+        const newNV = new NhanVien(req.body);
+        const result = await newNV.save(); // Mongoose tự validate ở đây
+        res.status(201).json({ message: 'Nhân viên thêm thành công', data: result });
     } catch (err) {
-        return res.status(500).json({ message: err.message });
+        res.status(400).json({ message: 'Lỗi thêm nhân viên', error: err.message });
     }
-}
+};
 const EditNV = async (req, res) => {
     try {
         const db = await connection();

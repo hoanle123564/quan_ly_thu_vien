@@ -3,8 +3,10 @@ const app = express()
 const ViewEngine = require('./config/viewEngine')
 const WebRoute = require('./routes/web')
 const bodyParser = require('body-parser')
+const connectDB = require('./config/connectdb1');
 const port = 3000
 
+connectDB();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
