@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const docGiaSchema = new mongoose.Schema({
-    MADOCGIA: {
-        type: String,
-        required: true,
-        unique: true
-    },
     HOLOT: {
         type: String,
         required: true
@@ -33,5 +29,6 @@ const docGiaSchema = new mongoose.Schema({
         required: true
     }
 }, { collection: 'DOCGIA' });
+docGiaSchema.plugin(AutoIncrement, { inc_field: 'MADOCGIA' });
 
 module.exports = mongoose.model('DOCGIA', docGiaSchema);
