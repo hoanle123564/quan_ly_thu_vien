@@ -3,7 +3,7 @@ const router = express.Router();
 const { ThemNV, EditNV, GetNV, DeleteNV } = require('../controllers/NhanVienController')
 const { ThemDocGia, EditDocGia, GetDocGia, DeleteDocGia } = require('../controllers/DocGiaController');
 const { ThemNHAXUATBAN, EditNHAXUATBAN, GetNHAXUATBAN, DeleteNHAXUATBAN } = require('../controllers/NhaXuatBanController');
-
+const { ThemSACH, EditSACH, GetSACH, DeleteSACH } = require('../controllers/SachController');
 router.get('/', (req, res) => {
     return res.send('hello')
 })
@@ -28,4 +28,10 @@ router.post('/api/add-NXB', ThemNHAXUATBAN)
 router.patch('/api/edit-NXB', EditNHAXUATBAN)
 router.get('/api/get-all-NXB', GetNHAXUATBAN)
 router.delete('/api/delete-NXB', DeleteNHAXUATBAN)
+
+// CRUD SACH
+router.post('/api/add-sach', ThemSACH)
+router.patch('/api/edit-sach', EditSACH)
+router.get('/api/get-all-sach', GetSACH)
+router.delete('/api/delete-sach', DeleteSACH)
 module.exports = router

@@ -6,7 +6,7 @@ const sachSchema = new mongoose.Schema({
     DONGIA: { type: Number, required: true, min: 0 },
     SOQUYEN: { type: Number, required: true, min: 0 },
     NAMXUATBAN: { type: Number, required: true },
-    MANXB: { type: String, required: true, ref: 'NHAXUATBAN' },
+    MANXB: { type: Number, required: true, ref: 'NHAXUATBAN' },
     TACGIA: { type: String }
 }, { collection: 'SACH' });
 sachSchema.plugin(AutoIncrement, { inc_field: 'MASACH' });
