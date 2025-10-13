@@ -10,4 +10,16 @@ const sachSchema = new mongoose.Schema({
     TACGIA: { type: String }
 }, { collection: 'SACH' });
 sachSchema.plugin(AutoIncrement, { inc_field: 'MASACH' });
+sachSchema.pre('save', async () => {
+    try {
+        const NHAXUATBAN = mongoose.model('NHAXUATBAN');
+        const MANXB = NHAXUATBAN.exists({ MANXB: this.MANXB })
+        if (!MANXB) {
+            throw new Error(`Mã sách :${this.MANXB} không tồn tại`)
+        }
+        next();
+    } catch (error) {
+        next(error);
+    }
+})
 module.exports = mongoose.model('SACH', sachSchema);
