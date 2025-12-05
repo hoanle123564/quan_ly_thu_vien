@@ -3,10 +3,7 @@ const NHAXUATBAN = require("../models/NhaXuatBan");
 const ThemNHAXUATBAN = async (req, res) => {
   try {
     // const newNHAXUATBAN = new NHAXUATBAN(req.body);
-    const newNHAXUATBAN = new NHAXUATBAN({
-      TENNXB: "NXB Kim Đồng",
-      DIACHI: "Cần Thơ City",
-    });
+    const newNHAXUATBAN = new NHAXUATBAN(req.body);
     const result = await newNHAXUATBAN.save(); // Mongoose tự validate ở đây
     res
       .status(201)
@@ -19,11 +16,14 @@ const ThemNHAXUATBAN = async (req, res) => {
 };
 const EditNHAXUATBAN = async (req, res) => {
   try {
-    await NHAXUATBAN.updateOne({ MANXB: 1 }, req.body);
-    const result = await NHAXUATBAN.findOne({ MANXB: 1 });
-    return res
-      .status(200)
-      .json({ message: "NHAXUATBAN updated!", data: result });
+    const { MANXB } = req.body;
+    const result = await NHAXUATBAN.findOneAndUpdate({ MANXB }, req.body, {
+      new: true,
+    });
+    if (!result)
+      return res.status(404).json({ message: "Không tìm thấy nhà xuất bản" });
+
+    res.json({ message: "Cập nhật thành công", data: result });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
