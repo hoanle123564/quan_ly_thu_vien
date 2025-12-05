@@ -39,6 +39,19 @@ const GetNV = async (req, res) => {
       .json({ message: "Can't get list NhanVien", error: err.message });
   }
 };
+const GetDetailNV = async (req, res) => {
+  try {
+    const { masnv } = req.query;
+    const nv = await NhanVien.findOne({ MSNV: masnv });
+    if (!nv)
+      return res.status(404).json({ message: "Nhân viên không tồn tại" });
+    return res.status(200).json({ message: "Detail NhanVien!", data: nv });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Can't get detail NhanVien", error: err.message });
+  }
+};
 const DeleteNV = async (req, rs) => {
   try {
     await NhanVien.deleteOne({ MSNV: 1 });
@@ -62,13 +75,19 @@ const LoginNhanVien = async (req, res) => {
     if (!check) return res.status(400).json({ message: "Sai mật khẩu" });
 
     const token = jwt.sign({ id: nv.MSNV, role: "admin" }, "secretkey", {
-      expiresIn: "2h",
+      expiresIn: "1d",
     });
-
-    res.json({ token });
+    res.status(200).json({ token });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-module.exports = { ThemNV, EditNV, GetNV, DeleteNV, LoginNhanVien };
+module.exports = {
+  ThemNV,
+  EditNV,
+  GetNV,
+  DeleteNV,
+  LoginNhanVien,
+  GetDetailNV,
+};
