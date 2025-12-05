@@ -6,6 +6,7 @@ const {
   GetNV,
   DeleteNV,
   LoginNhanVien,
+  GetDetailNV,
 } = require("../controllers/NhanVienController");
 const {
   ThemDocGia,
@@ -13,6 +14,7 @@ const {
   GetDocGia,
   DeleteDocGia,
   LoginDocGia,
+  GetDetailDocGia,
 } = require("../controllers/DocGiaController");
 const {
   ThemNHAXUATBAN,
@@ -33,15 +35,16 @@ const {
   DeleteTHEODOIMUONSACH,
   MuonSach,
   TraSach,
+  GetTHEODOIprivate,
+  GetLichSuMuonPrivate,
 } = require("../controllers/TheoDoiMuonSachController");
 
 const {
-  RegisterUser,
-  LoginUser,
-  LoginAdmin,
-  Logout,
-} = require("../controllers/AuthController");
-
+  getSummary,
+  borrowByMonth,
+  topBooks,
+  borrowStatus,
+} = require("../controllers/Summary");
 router.get("/", (req, res) => {
   return res.send("hello");
 });
@@ -53,6 +56,7 @@ router.get("/hello", (req, res) => {
 router.post("/api/add-staff", ThemNV);
 router.patch("/api/edit-staff", EditNV);
 router.get("/api/get-all-staff", GetNV);
+router.get("/api/get-detail-staff", GetDetailNV);
 router.delete("/api/delete-staff", DeleteNV);
 router.post("/api/login-nhanvien", LoginNhanVien);
 
@@ -60,7 +64,9 @@ router.post("/api/login-nhanvien", LoginNhanVien);
 router.post("/api/add-docgia", ThemDocGia);
 router.patch("/api/edit-docgia", EditDocGia);
 router.get("/api/get-all-docgia", GetDocGia);
-router.delete("/api/delete-docgia", DeleteDocGia);
+router.get("/api/get-detail-docgia", GetDetailDocGia);
+
+router.delete("/api/delete-docgia/:id", DeleteDocGia);
 router.post("/api/login-docgia", LoginDocGia);
 
 // CRUD NHAXUATBAN
@@ -79,18 +85,15 @@ router.delete("/api/delete-sach", DeleteSACH);
 router.post("/api/add-theodoi", ThemTHEODOIMUONSACH);
 router.patch("/api/edit-theodoi", EditTHEODOIMUONSACH);
 router.get("/api/get-all-theodoi", GetTHEODOIMUONSACH);
+router.get("/api/get-all-theodoi-private", GetTHEODOIprivate);
+router.get("/api/get-all-LichSuMuon-private", GetLichSuMuonPrivate);
 router.delete("/api/delete-theodoi", DeleteTHEODOIMUONSACH);
 router.post("/api/muon-sach", MuonSach);
 router.post("/api/tra-sach", TraSach);
 
-// AUTH USER
-router.post("/api/register-user", RegisterUser);
-router.post("/api/login-user", LoginUser);
-
-// AUTH ADMIN
-router.post("/api/login-admin", LoginAdmin);
-
-// LOGOUT (FE sẽ tự xoá token)
-router.post("/api/logout", Logout);
-
+// SUMMARY
+router.get("/api/summary", getSummary);
+router.get("/api/summary/borrow-by-month", borrowByMonth);
+router.get("/api/summary/top-books", topBooks);
+router.get("/api/summary/borrow-status", borrowStatus);
 module.exports = router;
