@@ -64,6 +64,33 @@ const MuonSach = async (req, res) => {
     if (!MADOCGIA || !MASACH || !SOLUONG)
       return res.status(400).json({ message: "Thiếu thông tin mượn sách!" });
 
+    // Kiểm tra xem độc giả có phiếu mượn nào quá hạn chưa trả không
+    const phieuDangMuon = await THEODOIMUONSACH.find({
+      MADOCGIA,
+      DATRASACH: false, // Chưa trả sách
+    });
+
+    const now = new Date();
+
+    for (let phieu of phieuDangMuon) {
+      const dueDate = new Date(phieu.NGAYMUON);
+      dueDate.setDate(dueDate.getDate() + 7); // Hạn trả là 7 ngày sau khi mượn
+
+      if (now > dueDate) {
+        const lateDays = Math.ceil((now - dueDate) / 86400000);
+        const fine = lateDays * 5000;
+
+        return res.status(403).json({
+          message: `Không thể mượn sách! Bạn có sách quá hạn ${lateDays} ngày, phạt ${fine.toLocaleString(
+            "vi-VN"
+          )}đ. Vui lòng trả sách trước khi mượn tiếp.`,
+          phieuQuaHan: phieu,
+          soNgayTre: lateDays,
+          tienPhat: fine,
+        });
+      }
+    }
+
     const sach = await SACH.findOne({ MASACH });
     if (!sach) return res.status(404).json({ message: "Sách không tồn tại!" });
 

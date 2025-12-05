@@ -1,7 +1,7 @@
 const DOCGIA = require("../models/DocGia");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const THEODOIMUONSACH = require("../models/TheoDoiMuonSach");
 const ThemDocGia = async (req, res) => {
   try {
     const {
@@ -141,7 +141,7 @@ const DeleteDocGia = async (req, res) => {
       });
     }
 
-    // 3. Nếu không có sách đang mượn → cho xóa
+    // 3. Nếu không có sách đang mượn k cho xóa
     await DOCGIA.findByIdAndDelete(id);
 
     return res.status(200).json({
